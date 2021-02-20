@@ -1,9 +1,12 @@
 /**
-* Copyright 2021 Tonia Sanzo ©
+* Copyright 2021 Goblin HQ ©
 * Title: Em
-* Author: Tonia Sanzo
 * Date: 2/20/2021
 * File: Em UGame.cpp
+*
+* Engineers: Charles Chiasson, Tonia Sanzo
+* Audio:     Ethan Schwabe
+* Art:       Bobbierre Heard, Bharati Mahajan, Ngan Nguyen
 */
 #include "UGame.h"
 
@@ -21,7 +24,7 @@ UGame::UGame()
 
 
 // Initializes and loads all the game objects
-bool UGame::init(SDL_Renderer *aRenderer, UWindow *aWindow)
+bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
 {
     // Initialize success flag
     bool success = true;
@@ -37,13 +40,13 @@ bool UGame::init(SDL_Renderer *aRenderer, UWindow *aWindow)
     }
     else
     {
-        // Initialize the environment textures
-        mTestTexture.initUTexture(mRenderer);
-        if (!mTestTexture.loadFromFile("assets/test.png"))
+        // Initialize the player
+        if (!mPlayer.init(mRenderer, "assets/em_spritesheet.png"))
         {
-            std::printf("Failed to load test texture!\n");
+            printf("Failed to load player!\n");
             success = false;
         }
+
     }
 
     return success;
@@ -53,9 +56,9 @@ bool UGame::init(SDL_Renderer *aRenderer, UWindow *aWindow)
 
 
 // Update the game world based on the time since the last update
-void UGame::update(const float &dt)
+void UGame::update(const float& dt)
 {
-
+    mPlayer.update(dt);
 }
 
 
@@ -63,7 +66,7 @@ void UGame::update(const float &dt)
 
 
 // Handle all the events on the queue
-bool UGame::handleEvent(SDL_Event &e)
+bool UGame::handleEvent(SDL_Event& e)
 {
     if (e.type == SDL_QUIT) { return true; }
 
@@ -76,7 +79,7 @@ bool UGame::handleEvent(SDL_Event &e)
 // Draw the game world to the screen
 void UGame::render()
 {
-    mTestTexture.render(0, 0);
+    mPlayer.render();
 }
 
 
@@ -94,4 +97,6 @@ void UGame::close()
     {
         mWindow = nullptr;
     }
+
+    mPlayer.free();
 }

@@ -2,18 +2,17 @@
 * Copyright 2021 Goblin HQ ©
 * Title: Em
 * Date: 2/20/2021
-* File: Em ULib.cpp
+* File: Em UBackground.h
 *
 * Engineers: Charles Chiasson, Tonia Sanzo
 * Audio:     Ethan Schwabe
 * Art:       Bobbierre Heard, Bharati Mahajan, Ngan Nguyen
 */
-#include "Ulib.h"
+#pragma once
+#include "ULib.h"
+#include "UTexture.h"
+#include "UVector3.h"
+#include <vector>
 
-
-
-
-const std::string ULib::TITLE = "Em";
-const UVector3 ULib::SCREEN_DIMENSIONS(1280, 760, 0);
 
 

@@ -1,9 +1,12 @@
 /**
-* Copyright 2021 Tonia Sanzo ©
+* Copyright 2021 Goblin HQ ©
 * Title: Em
-* Author: Tonia Sanzo
 * Date: 2/20/2021
 * File: Em UGame.h
+*
+* Engineers: Charles Chiasson, Tonia Sanzo
+* Audio:     Ethan Schwabe
+* Art:       Bobbierre Heard, Bharati Mahajan, Ngan Nguyen
 */
 #pragma once
 #include "ULib.h"
