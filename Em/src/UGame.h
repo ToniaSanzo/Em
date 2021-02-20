@@ -9,6 +9,7 @@
 #include "ULib.h"
 #include "UTexture.h"
 #include "UWindow.h"
+#include "GPlayer.h"
 
 
 
@@ -39,6 +40,6 @@ private:
     SDL_Renderer *mRenderer;
     UWindow *mWindow;
 
-    // Environment textures
-    UTexture mTestTexture;
+    // The player
+    GPlayer mPlayer;
 };

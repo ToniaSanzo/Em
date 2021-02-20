@@ -30,6 +30,9 @@
     <ClCompile Include="src\UGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\UWindow.h">
@@ -47,5 +50,19 @@
     <ClInclude Include="src\UGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GPlayer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\em_spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\icon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

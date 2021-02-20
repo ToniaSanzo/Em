@@ -37,13 +37,13 @@ bool UGame::init(SDL_Renderer *aRenderer, UWindow *aWindow)
     }
     else
     {
-        // Initialize the environment textures
-        mTestTexture.initUTexture(mRenderer);
-        if (!mTestTexture.loadFromFile("assets/test.png"))
+        // Initialize the player
+        if (!mPlayer.init(mRenderer, "assets/em_spritesheet.png"))
         {
-            std::printf("Failed to load test texture!\n");
+            printf("Failed to load player!\n");
             success = false;
         }
+        
     }
 
     return success;
@@ -55,7 +55,7 @@ bool UGame::init(SDL_Renderer *aRenderer, UWindow *aWindow)
 // Update the game world based on the time since the last update
 void UGame::update(const float &dt)
 {
-
+    mPlayer.update(dt);
 }
 
 
@@ -76,7 +76,7 @@ bool UGame::handleEvent(SDL_Event &e)
 // Draw the game world to the screen
 void UGame::render()
 {
-    mTestTexture.render(0, 0);
+    mPlayer.render();
 }
 
 
@@ -94,4 +94,6 @@ void UGame::close()
     {
         mWindow = nullptr;
     }
+
+    mPlayer.free();
 }
