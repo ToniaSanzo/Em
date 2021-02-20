@@ -1,5 +1,5 @@
-/**
-* Copyright 2021 Goblin HQ ©
+ï»¿/**
+* Copyright 2021 Goblin HQ ï¿½
 * Title: Em
 * Date: 2/20/2021
 * File: Em UGame.cpp
@@ -47,6 +47,7 @@ bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
             success = false;
         }
 
+        
     }
 
     return success;

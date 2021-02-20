@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\GBottle.cpp" />
+    <ClCompile Include="src\GPlayer.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\UGame.cpp" />
     <ClCompile Include="src\ULib.cpp" />
@@ -150,12 +151,18 @@
     <ClCompile Include="src\UWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GPlayer.h" />
     <ClInclude Include="src\BackGround.h" />
     <ClInclude Include="src\UGame.h" />
     <ClInclude Include="src\ULib.h" />
     <ClInclude Include="src\UTexture.h" />
     <ClInclude Include="src\UVector3.h" />
     <ClInclude Include="src\UWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\em_spritesheet.png" />
+    <Image Include="assets\icon.png" />
+    <Image Include="assets\test.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
