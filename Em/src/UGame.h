@@ -41,7 +41,4 @@ private:
 
     // Environment textures
     UTexture mBackgroundTexture, mGlassCageTexture, mHouseForegroundTexture, mWheelTexture, mWheelArmTexture;
-
-    // The hamster
-    GHamster mHamster;
 };
