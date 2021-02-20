@@ -40,5 +40,5 @@ private:
     UWindow *mWindow;
 
     // Environment textures
-    UTexture mBackgroundTexture, mGlassCageTexture, mHouseForegroundTexture, mWheelTexture, mWheelArmTexture;
+    UTexture mTestTexture;
 };

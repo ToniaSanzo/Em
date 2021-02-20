@@ -38,47 +38,12 @@ bool UGame::init(SDL_Renderer *aRenderer, UWindow *aWindow)
     else
     {
         // Initialize the environment textures
-        mBackgroundTexture.initUTexture(mRenderer);
-        if (!mBackgroundTexture.loadFromFile("assets/background.png"))
+        mTestTexture.initUTexture(mRenderer);
+        if (!mTestTexture.loadFromFile("assets/test.png"))
         {
-            std::printf("Failed to load background texture!\n");
+            std::printf("Failed to load test texture!\n");
             success = false;
         }
-
-        mGlassCageTexture.initUTexture(mRenderer);
-        if (!mGlassCageTexture.loadFromFile("assets/glass_cage.png"))
-        {
-            std::printf("Failed to load glass cage texture!\n");
-            success = false;
-        }
-
-        mWheelArmTexture.initUTexture(mRenderer);
-        if (!mWheelArmTexture.loadFromFile("assets/wheel_arm.png"))
-        {
-            std::printf("Failed to load wheel arm texture!\n");
-            success = false;
-        }
-
-        mWheelTexture.initUTexture(mRenderer);
-        if (!mWheelTexture.loadFromFile("assets/wheel.png"))
-        {
-            std::printf("Failed to load wheel texture!\n");
-            success = false;
-        }
-
-        mHouseForegroundTexture.initUTexture(mRenderer);
-        if (!mHouseForegroundTexture.loadFromFile("assets/house_foreground.png"))
-        {
-            std::printf("Failed to load house foreground texture!\n");
-            success = false;
-        }
-
-        if (!mHamster.init(mRenderer, "assets/hamster.png"))
-        {
-            std::printf("Failed to load hamster!\n");
-            success = false;
-        }
-
     }
 
     return success;
@@ -90,7 +55,7 @@ bool UGame::init(SDL_Renderer *aRenderer, UWindow *aWindow)
 // Update the game world based on the time since the last update
 void UGame::update(const float &dt)
 {
-    mHamster.update(dt);
+
 }
 
 
@@ -102,8 +67,6 @@ bool UGame::handleEvent(SDL_Event &e)
 {
     if (e.type == SDL_QUIT) { return true; }
 
-    mHamster.handleEvent(e);
-
     return false;
 }
 
@@ -113,12 +76,7 @@ bool UGame::handleEvent(SDL_Event &e)
 // Draw the game world to the screen
 void UGame::render()
 {
-    mBackgroundTexture.render(0, 0);
-    mWheelTexture.render(728, 122);
-    mWheelArmTexture.render(784, 281);
-    mHamster.render();
-    mHouseForegroundTexture.render(210, 352);
-    mGlassCageTexture.render(109, 69);
+    mTestTexture.render(0, 0);
 }
 
 
@@ -136,15 +94,4 @@ void UGame::close()
     {
         mWindow = nullptr;
     }
-
-    // Free the environment texture
-    mBackgroundTexture.free();
-    mWheelTexture.free();
-    mWheelArmTexture.free();
-    mHouseForegroundTexture.free();
-    mGlassCageTexture.free();
-
-    // Free the hamster
-    mHamster.free();
-    std::printf("Hector the Hamster has been liberated.\n");
 }

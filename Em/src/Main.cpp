@@ -34,7 +34,7 @@ bool init()
     else
     {
         // Create window
-        if (!gWindow.init(ULib::TITLE, ULib::SCREEN_DIMENSIONS.x, ULib::SCREEN_DIMENSIONS.y, "assets/em_icon.png"))
+        if (!gWindow.init(ULib::TITLE, ULib::SCREEN_DIMENSIONS.x, ULib::SCREEN_DIMENSIONS.y, "assets/icon.png"))
         {
             printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
             success = false;
