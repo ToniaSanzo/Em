@@ -11,14 +11,7 @@
 #include "GBottle.h"
 
 
-
-
-
-
-
 // Class Constraints
-const int GBottle::FRAME_WIDTH = 0;//TODO CHANGE THESE WHEN WE GET SPRITE SHEET SPECS
-const int GBottle::FRAME_HEIGHT = 0;//TODO CHANGE THESE WHEN WE GET SPRITE SHEET SPECS
 const int GBottle::STAND_STATE = 0;
 const int GBottle::WALK_STATE = 1;
 const int GBottle::OPEN_STATE = 2;
@@ -65,7 +58,7 @@ bool GBottle::init(SDL_Renderer* aRenderer, const std::string& path)
     }
 
 
-
+    return success;
 }
 
 
@@ -124,7 +117,7 @@ void GBottle::update(const float& dt) {
 // Draw the bottle
 void GBottle::render()
 {
-    mSpriteSheet.render(static_cast<int>(mPosition.x - (FRAME_WIDTH / 2.0)), static_cast<int>(mPosition.y - (FRAME_HEIGHT / 2.0)), &mAnimationFrames[mCurrFrame]);
+    mSpriteSheet.render(static_cast<int>(mPosition.x - (FRAME_WIDTH / 2.0)), static_cast<int>(mPosition.y - (FRAME_HEIGHT / 2.0)));
 }
 
 

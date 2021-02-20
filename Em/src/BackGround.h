@@ -16,3 +16,46 @@
 
 
 
+
+class GBackground {
+    // Initialize the GBackgrounds member variables
+    GBackground();
+
+    // Initialize the background object
+    bool init(SDL_Renderer*);
+
+    // Update the background
+    void update(const double&);
+
+    // Draw the default background
+    void renderPlay(const UVector3&);
+
+    // Draw the menu background
+    void renderMenu(const UVector3&);
+
+    // Draw the settings menu
+    void renderSettings(const UVector3&);
+
+    // Free the resources allocated for this texture
+    void free();
+
+private:
+
+    UTexture* mBackground, * mForeground, * mMenuScreen, * mSettingsMenu;// need more 
+
+
+    // Position of the title image
+    UVector3 mTitlePos;
+
+
+
+
+
+
+};
+
+
+
+
+
+

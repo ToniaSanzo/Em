@@ -13,7 +13,7 @@
 #include "UTexture.h"
 #include "UWindow.h"
 #include "GPlayer.h"
-
+#include "GBottle.h"
 
 
 
@@ -45,4 +45,9 @@ private:
 
     // The player
     GPlayer mPlayer;
+
+
+    //Bottle 
+    GBottle mBottle;
+
 };

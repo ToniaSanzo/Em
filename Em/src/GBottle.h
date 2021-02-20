@@ -19,8 +19,8 @@ class GBottle {
 
 public: 
 
-		const static int FRAME_WIDTH;
-		const static int FRAME_HEIGHT;
+    const static int FRAME_WIDTH = 100;
+    const static int FRAME_HEIGHT = 100;
         const static int WALK_STATE;
         const static int STAND_STATE;
         const static int OPEN_STATE;
@@ -31,7 +31,7 @@ public:
             RIGHT_STEP,
             LEFT_STEP,
             STANDING,
-            SMASHED,
+            OPENED,
             ATTACHED
         };
 
@@ -56,16 +56,16 @@ public:
         void free();
 
         //set overlap flag
-        void setOverlapFlag(bool aVal) { overlap = aVal; }
+        void setOverlapFlag(bool aVal) { overlapflag = aVal; }
 
         // Set's the bottles attach
         void setAttachedFlag(bool aVal) { attachedFlag = aVal; }
         // Set's the bottles openedflag
-        void setAttachedFlag(bool aVal) { openedflag = aVal; }
+        void setOpenedflagFlag(bool aVal) { openedflag = aVal; }
 private:
     // collision with player flag
     bool aliveflag,attachedFlag,overlapflag,openedflag;
-    int overlaptime;
+    float overlaptime;
     //Bottle state var
 
     char mCurrState;
@@ -78,7 +78,7 @@ private:
     //Bottles Sprite sheet , Number of frames ,and current position on sprite sheet
 
     UTexture mSpriteSheet;
-    SDL_Rect mAnimationFrames[6];
+    SDL_Rect mAnimationFrames[1];
     //TODO CHANGE THIS WHEN WE GET TOTAL NUMBER OF ANIMATIONS 
     int mCurrFrame;
 

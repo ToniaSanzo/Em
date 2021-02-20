@@ -46,7 +46,11 @@ bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
             printf("Failed to load player!\n");
             success = false;
         }
-
+        if (!mBottle.init(mRenderer, "assets/bottle.png"))
+        {
+            printf("Failed to load bottle!\n");
+            success = false;
+        }
         
     }
 
@@ -60,6 +64,7 @@ bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
 void UGame::update(const float& dt)
 {
     mPlayer.update(dt);
+    mBottle.update(dt);
 }
 
 
@@ -81,6 +86,7 @@ bool UGame::handleEvent(SDL_Event& e)
 void UGame::render()
 {
     mPlayer.render();
+    mBottle.render();
 }
 
 
@@ -100,4 +106,5 @@ void UGame::close()
     }
 
     mPlayer.free();
+    mBottle.free();
 }
