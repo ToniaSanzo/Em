@@ -12,15 +12,15 @@
 #include "ULib.h"
 #include "UTexture.h"
 #include "GPlayer.h"
-
+#include "UTimer.h"
 
 class GBottle {
 
 
 public: 
 
-    const static int FRAME_WIDTH = 100;
-    const static int FRAME_HEIGHT = 100;
+    const static int FRAME_WIDTH = 219;
+    const static int FRAME_HEIGHT = 327;
         const static int WALK_STATE;
         const static int STAND_STATE;
         const static int OPEN_STATE;
@@ -69,6 +69,9 @@ public:
 
         bool getAliveflag(){ return aliveflag; }
         void setAliveflag(bool aVal) { aliveflag = aVal; }
+        void setPosition(UVector3);
+
+
 
 
 private:
@@ -86,6 +89,9 @@ private:
     float mMaxSpeed;
     UVector3 mVel;
     UVector3 mPosition;
+
+    UTimer timer;
+    Uint32 prevTime;
 
 
     //Bottles Sprite sheet , Number of frames ,and current position on sprite sheet

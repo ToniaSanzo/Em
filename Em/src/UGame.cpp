@@ -9,7 +9,8 @@
 * Art:       Bobbierre Heard, Bharati Mahajan, Ngan Nguyen
 */
 #include "UGame.h"
-
+#include <iostream>
+#include <stdlib.h>
 
 
 
@@ -31,6 +32,7 @@ UGame::UGame()
 bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
 {
     // Initialize success flag
+    srand(static_cast<unsigned>(time(0)));
     bool success = true;
 
     // Set the renderer and window
@@ -55,7 +57,7 @@ bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
      
 
         GBottle* tmpbottle = new GBottle();
-        tmpbottle->init(mRenderer, "assets/bottle.png");
+        tmpbottle->init(mRenderer, "assets/SpriteSheet-Bottle-10.png");
         bottles.push_back(tmpbottle);
 
 
@@ -73,9 +75,9 @@ bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
             std::printf("Failed to load sound icon texture!\n");
             success = false;
         }
-     //   mSounds = new USound();
-      //  mSounds->init("assets/menu.mp3");
-      //  mSounds->playMusic();
+       mSounds = new USound();
+      mSounds->init("assets/menu.mp3");
+       mSounds->playMusic();
 
 
         mButton = new GSButton();
@@ -100,6 +102,7 @@ void UGame::update(const float& dt)
     for (GBottle* &bottle : bottles) {
         bottle->update(dt,mPlayer);
         if (!bottle->getAliveflag()) {
+            //change to blue animation
              bottle->setAliveflag(true);
              killBottle = true;
         }
@@ -139,12 +142,21 @@ bool UGame::handleEvent(SDL_Event& e)
     return false;
 }
 
-void UGame::spawnBottle() {
+UVector3 UGame::spawnBottle() {
 
+    int spawnlocalgen = rand() % 1;
+    UVector3 spawn;
+    if (spawnlocalgen == 0) {
 
+        spawn = UVector3(300, 100, 0);//TODO THIS Y VAL MUST CHANGE DEPENDS ON THE MAP
+    }
+    else {
 
+        spawn = UVector3(300, 100, 0);//TODO THIS Y VAL MUST CHANGE DEPENDS ON THE MAP
 
+    }
 
+    return spawn;
 }
 
 
@@ -154,7 +166,7 @@ void UGame::render()
     mPlayer.render();
    
     for (GBottle*& bot : bottles) {
-
+        bot->setPosition(spawnBottle());
         bot->render();
 
     }

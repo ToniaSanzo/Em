@@ -40,7 +40,7 @@ public:
     // Draw game world
     void render();
 
-    void spawnBottle();
+    UVector3 spawnBottle();
 
     // Free the resources
     void close();

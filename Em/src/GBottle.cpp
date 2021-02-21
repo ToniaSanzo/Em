@@ -25,6 +25,7 @@ GBottle::GBottle() {
     overlapflag = attachedFlag = false;
     mLeft = mRight = false;
     aliveflag = true;
+    mPosition = NULL;
 }
 
 // Initialize the Bottle object
@@ -44,7 +45,7 @@ bool GBottle::init(SDL_Renderer* aRenderer, const std::string& path)
     }
     else
     {
-        mPosition = UVector3(0, 0, 0);//TODO this position will change 
+        
 
         // Initialize the animation tiles
         for (int row = 0; row < 3; ++row)// row < 3 will change based on the amount of animations in the spread
@@ -60,6 +61,8 @@ bool GBottle::init(SDL_Renderer* aRenderer, const std::string& path)
     }
   
 
+    timer.start();
+
     return success;
 }
 
@@ -73,6 +76,19 @@ bool GBottle::init(SDL_Renderer* aRenderer, const std::string& path)
 
 
 void GBottle::update(const float& dt,GPlayer player) {
+
+    Uint32 currentTime = timer.getTicks() % 500;
+
+
+    if (prevTime > currentTime) {
+
+        mCurrFrame = ++mCurrFrame % 4;
+
+
+    }
+
+    prevTime = currentTime;
+
 
     if (aliveflag) {
 
@@ -100,67 +116,128 @@ void GBottle::update(const float& dt,GPlayer player) {
             mCurrState = OPEN_STATE;
            
             //change to different animations
+           
 
 
-        }
 
 
-
-        if (mPosition.x < player.getLocation().x) {
-
-            mvRight();
+            aliveflag = false;
 
         }
-        else if(mPosition.x > player.getLocation().x) {
-            mvLeft();
-        }
-  
-        if (!mLeft && !mRight)
-        {
-            // Apply mFriction
-            if (mVel.x > 0)
-            {
-                mVel.x -= mFriction * dt;
 
-                // Prevent mFriction from pushing the bottle in the opposite direction
-                if (mVel.x < 0) { mVel.x = 0; }
+        if (!openedflag) {
+
+            if (mPosition.x < player.getLocation().x) {
+
+                mvRight();
+
             }
-            else if (mVel.x < 0)
-            {
-                mVel.x += mFriction * dt;
-
-                // Prevent mFriction from pushing the bottle in the opposite direction
-                if (mVel.x > 0) { mVel.x = 0; }
-            }
-        }
-        else
-        {
-            // Update the bottle's velocity
-            if (mLeft)
-            {
-                mVel.x -= mAcceleration * dt;
-                mLeft = false;
+            else if (mPosition.x > player.getLocation().x) {
+                mvLeft();
             }
 
-            if (mRight)
+            if (!mLeft && !mRight)
             {
-                mVel.x += mAcceleration * dt;
-                mRight = false;
+                // Apply mFriction
+                if (mVel.x > 0)
+                {
+                    mVel.x -= mFriction * dt;
+
+                    // Prevent mFriction from pushing the bottle in the opposite direction
+                    if (mVel.x < 0) { mVel.x = 0; }
+                }
+                else if (mVel.x < 0)
+                {
+                    mVel.x += mFriction * dt;
+
+                    // Prevent mFriction from pushing the bottle in the opposite direction
+                    if (mVel.x > 0) { mVel.x = 0; }
+                }
             }
+            else
+            {
+                // Update the bottle's velocity
+                if (mLeft)
+                {
+                    mVel.x -= mAcceleration * dt;
+                    mLeft = false;
+                }
+
+                if (mRight)
+                {
+                    mVel.x += mAcceleration * dt;
+                    mRight = false;
+                }
+            }
+
+
+            // Cap the player's speed
+            if (mVel.x > mMaxSpeed)
+            {
+                mVel.x = mMaxSpeed;
+            }
+            else if (mVel.x < -mMaxSpeed)
+            {
+                mVel.x = -mMaxSpeed;
+            }
+
         }
+        else {// if dead do this
+            if (mPosition.x > player.getLocation().x) {
+
+                mvRight();
+
+            }
+            else if (mPosition.x < player.getLocation().x) {
+                mvLeft();
+            }
+
+            if (!mLeft && !mRight)
+            {
+                // Apply mFriction
+                if (mVel.x > 0)
+                {
+                    mVel.x -= mFriction * dt;
+
+                    // Prevent mFriction from pushing the bottle in the opposite direction
+                    if (mVel.x < 0) { mVel.x = 0; }
+                }
+                else if (mVel.x < 0)
+                {
+                    mVel.x += mFriction * dt;
+
+                    // Prevent mFriction from pushing the bottle in the opposite direction
+                    if (mVel.x > 0) { mVel.x = 0; }
+                }
+            }
+            else
+            {
+                // Update the bottle's velocity
+                if (mLeft)
+                {
+                    mVel.x -= mAcceleration * dt;
+                    mLeft = false;
+                }
+
+                if (mRight)
+                {
+                    mVel.x += mAcceleration * dt;
+                    mRight = false;
+                }
+            }
 
 
-        // Cap the player's speed
-        if (mVel.x > mMaxSpeed)
-        {
-            mVel.x = mMaxSpeed;
+            // Cap the player's speed
+            if (mVel.x > mMaxSpeed)
+            {
+                mVel.x = mMaxSpeed;
+            }
+            else if (mVel.x < -mMaxSpeed)
+            {
+                mVel.x = -mMaxSpeed;
+            }
+
         }
-        else if (mVel.x < -mMaxSpeed)
-        {
-            mVel.x = -mMaxSpeed;
-        }
-
-
 
 
 
@@ -180,7 +257,13 @@ void GBottle::update(const float& dt,GPlayer player) {
 // Draw the bottle
 void GBottle::render()
 {
-    mSpriteSheet.render(static_cast<int>(mPosition.x - (FRAME_WIDTH / 2.0)), static_cast<int>(mPosition.y - (FRAME_HEIGHT / 2.0)));
+    
+    
+    
+    mSpriteSheet.render(static_cast<int>(mPosition.x - (FRAME_WIDTH / 2.0)), static_cast<int>(mPosition.y - (FRAME_HEIGHT / 2.0)),&mAnimationFrames[mCurrFrame]);
+
+
+
 }
 
 
@@ -199,7 +282,11 @@ void GBottle::mvLeft() {
 
     
 }
+void GBottle::setPosition(UVector3 pos) {
 
+    mPosition = pos;
+
+}
 
 // Deallocate the bottle's resources
 void GBottle::free()
