@@ -9,7 +9,8 @@
 * Art:       Bobbierre Heard, Bharati Mahajan, Ngan Nguyen
 */
 #include "GBottle.h"
-
+#include "GPlayer.h"
+#include "UVector3.h"
 
 // Class Constraints
 const int GBottle::STAND_STATE = 0;
@@ -22,6 +23,7 @@ GBottle::GBottle() {
 	mCurrState = STAND_STATE;
 	mCurrFrame = static_cast<int>(FRAMES::STANDING);
     overlapflag = attachedFlag = false;
+    mLeft = mRight = false;
     aliveflag = true;
 }
 
@@ -42,7 +44,7 @@ bool GBottle::init(SDL_Renderer* aRenderer, const std::string& path)
     }
     else
     {
-        mPosition = UVector3(320, 450, 0);//TODO this position will change 
+        mPosition = UVector3(0, 0, 0);//TODO this position will change 
 
         // Initialize the animation tiles
         for (int row = 0; row < 3; ++row)// row < 3 will change based on the amount of animations in the spread
@@ -56,13 +58,21 @@ bool GBottle::init(SDL_Renderer* aRenderer, const std::string& path)
             }
         }
     }
-
+  
 
     return success;
 }
 
 
-void GBottle::update(const float& dt) {
+
+
+
+
+
+
+
+
+void GBottle::update(const float& dt,GPlayer player) {
 
     if (aliveflag) {
 
@@ -94,7 +104,61 @@ void GBottle::update(const float& dt) {
 
         }
 
+
+
+        if (mPosition.x < player.getLocation().x) {
+
+            mvRight();
+
+        }
+        else if(mPosition.x > player.getLocation().x) {
+            mvLeft();
+        }
   
+        if (!mLeft && !mRight)
+        {
+            // Apply mFriction
+            if (mVel.x > 0)
+            {
+                mVel.x -= mFriction * dt;
+
+                // Prevent mFriction from pushing the bottle in the opposite direction
+                if (mVel.x < 0) { mVel.x = 0; }
+            }
+            else if (mVel.x < 0)
+            {
+                mVel.x += mFriction * dt;
+
+                // Prevent mFriction from pushing the bottle in the opposite direction
+                if (mVel.x > 0) { mVel.x = 0; }
+            }
+        }
+        else
+        {
+            // Update the bottle's velocity
+            if (mLeft)
+            {
+                mVel.x -= mAcceleration * dt;
+                mLeft = false;
+            }
+
+            if (mRight)
+            {
+                mVel.x += mAcceleration * dt;
+                mRight = false;
+            }
+        }
+
+
+        // Cap the player's speed
+        if (mVel.x > mMaxSpeed)
+        {
+            mVel.x = mMaxSpeed;
+        }
+        else if (mVel.x < -mMaxSpeed)
+        {
+            mVel.x = -mMaxSpeed;
+        }
 
 
 
@@ -102,8 +166,7 @@ void GBottle::update(const float& dt) {
 
 
 
-
-
+        
 
 
     }
@@ -121,7 +184,21 @@ void GBottle::render()
 }
 
 
+void GBottle::mvRight() {
 
+    mRight = true;
+    mPosition.x += 2;
+
+
+}
+void GBottle::mvLeft() {
+
+    mLeft = true;
+
+    mPosition.x -= 2;
+
+    
+}
 
 
 // Deallocate the bottle's resources

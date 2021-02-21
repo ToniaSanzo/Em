@@ -18,6 +18,10 @@ UGame::UGame()
 {
     mRenderer = nullptr;
     mWindow = nullptr;
+    buttTexture = nullptr;
+    mSounds = nullptr;
+    mButton = nullptr;
+
 }
 
 
@@ -46,12 +50,39 @@ bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
             printf("Failed to load player!\n");
             success = false;
         }
-        if (!mBottle.init(mRenderer, "assets/bottle.png"))
-        {
-            printf("Failed to load bottle!\n");
+    
+        // Initialize all the bottles
+     
+
+        GBottle* tmpbottle = new GBottle();
+        tmpbottle->init(mRenderer, "assets/bottle.png");
+        bottles.push_back(tmpbottle);
+
+
+           /* if (!mBottle.init(mRenderer, "assets/bottle.png"))
+            {
+                printf("Failed to load bottle!\n");
+                success = false;
+            }*/
+        
+
+
+        buttTexture = new UTexture();
+        buttTexture->initUTexture(mRenderer);
+        if (!buttTexture->loadFromFile("assets/volume.png")) {
+            std::printf("Failed to load sound icon texture!\n");
             success = false;
         }
-        
+     //   mSounds = new USound();
+      //  mSounds->init("assets/menu.mp3");
+      //  mSounds->playMusic();
+
+
+        mButton = new GSButton();
+        if (!mButton->init(buttTexture, mSounds)) {
+            printf("Failed to initialize sound button!\n");
+            success = false;
+        }
     }
 
     return success;
@@ -63,8 +94,33 @@ bool UGame::init(SDL_Renderer* aRenderer, UWindow* aWindow)
 // Update the game world based on the time since the last update
 void UGame::update(const float& dt)
 {
+    bool killBottle = false;
+    
     mPlayer.update(dt);
-    mBottle.update(dt);
+    for (GBottle* &bottle : bottles) {
+        bottle->update(dt,mPlayer);
+        if (!bottle->getAliveflag()) {
+             bottle->setAliveflag(true);
+             killBottle = true;
+        }
+    }
+    // Clean up the dead trees when necessary
+    while (killBottle) {
+        std::vector<GBottle*>::iterator beg, end;
+        for (beg = bottles.begin(), end = bottles.end(); beg != end && (*beg)->getAliveflag(); ++beg);
+
+        // Found a dead ramp
+        if (beg != end) {
+            (*beg)->free();
+            delete(*beg);
+            bottles.erase(beg);
+        }
+        // No dead ramps found
+        else {
+            killBottle = false;
+        }
+    }
+  
 }
 
 
@@ -74,19 +130,36 @@ void UGame::update(const float& dt)
 // Handle all the events on the queue
 bool UGame::handleEvent(SDL_Event& e)
 {
+    mButton->handleEvent(&e);
+    mPlayer.updateGameState(2);
+    mPlayer.handleEvent(e);
+
     if (e.type == SDL_QUIT) { return true; }
 
     return false;
 }
 
+void UGame::spawnBottle() {
 
+
+
+
+
+}
 
 
 // Draw the game world to the screen
 void UGame::render()
 {
     mPlayer.render();
-    mBottle.render();
+   
+    for (GBottle*& bot : bottles) {
+
+        bot->render();
+
+    }
+
+    mButton->render();
 }
 
 
@@ -106,5 +179,16 @@ void UGame::close()
     }
 
     mPlayer.free();
-    mBottle.free();
+
+    for (GBottle*& bot : bottles) {
+
+        bot->free();
+        delete bot;
+        
+    }
+
+    bottles.clear();
+
+    //mBottle.free();
+    
 }

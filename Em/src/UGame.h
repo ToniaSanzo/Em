@@ -14,6 +14,8 @@
 #include "UWindow.h"
 #include "GPlayer.h"
 #include "GBottle.h"
+#include "GSButton.h"
+#include "UVector3.h"
 
 
 
@@ -22,6 +24,9 @@ class UGame
 public:
     // Initializes internals
     UGame();
+
+   
+
 
     // Initialize the game objects
     bool init(SDL_Renderer *, UWindow *);
@@ -35,6 +40,8 @@ public:
     // Draw game world
     void render();
 
+    void spawnBottle();
+
     // Free the resources
     void close();
 
@@ -42,12 +49,15 @@ private:
     // Game renderer, and window
     SDL_Renderer *mRenderer;
     UWindow *mWindow;
-
+    
     // The player
     GPlayer mPlayer;
+    std::vector<GBottle*> bottles;
 
-
+    GSButton *mButton;
+    UTexture *buttTexture;
+    USound *mSounds;
     //Bottle 
-    GBottle mBottle;
+   
 
 };

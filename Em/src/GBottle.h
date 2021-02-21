@@ -11,7 +11,7 @@
 #pragma once
 #include "ULib.h"
 #include "UTexture.h"
-
+#include "GPlayer.h"
 
 
 class GBottle {
@@ -40,11 +40,15 @@ public:
         GBottle();
 
 
+
+        void mvRight();
+        void mvLeft();
+
         // Initilaize the Bottle object
         bool init(SDL_Renderer*, const std::string&);
 
         // Updates the bottle
-        void update(const float&);
+        void update(const float&,GPlayer);
 
         // handles event
         void handleEvent(SDL_Event&);
@@ -61,7 +65,12 @@ public:
         // Set's the bottles attach
         void setAttachedFlag(bool aVal) { attachedFlag = aVal; }
         // Set's the bottles openedflag
-        void setOpenedflagFlag(bool aVal) { openedflag = aVal; }
+        void setOpenedflag(bool aVal) { openedflag = aVal; }
+
+        bool getAliveflag(){ return aliveflag; }
+        void setAliveflag(bool aVal) { aliveflag = aVal; }
+
+
 private:
     // collision with player flag
     bool aliveflag,attachedFlag,overlapflag,openedflag;
@@ -71,7 +80,11 @@ private:
     char mCurrState;
 
     //bottle pos
-
+    bool mLeft, mRight;
+    float mAcceleration;
+    float mFriction;
+    float mMaxSpeed;
+    UVector3 mVel;
     UVector3 mPosition;
 
 

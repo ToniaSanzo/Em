@@ -13,7 +13,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
-
 #include <SDL_ttf.h>
 #include <string>
 #include "UVector3.h"
@@ -26,4 +25,10 @@ struct ULib
     // Window information
     const static std::string TITLE;
     const static UVector3 SCREEN_DIMENSIONS;
+
+    // Game states
+    const static int INITIAL_LEVEL = 0;
+    const static int TUTORIAL_LEVEL = 1;
+    const static int ANGER_LEVEL = 2;
+    const static int BREATH_LEVEL = 3;
 };

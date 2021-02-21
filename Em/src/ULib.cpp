@@ -13,7 +13,5 @@
 
 
 
-const std::string ULib::TITLE = "Em";
+const std::string ULib::TITLE = "Emmitt";
 const UVector3 ULib::SCREEN_DIMENSIONS(1280, 760, 0);
-
-

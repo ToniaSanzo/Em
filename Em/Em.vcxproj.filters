@@ -36,6 +36,15 @@
     <ClCompile Include="src\GBottle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\USound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GSButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\UWindow.h">
@@ -53,10 +62,16 @@
     <ClInclude Include="src\UGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\BackGround.h">
+    <ClInclude Include="src\GPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GPlayer.h">
+    <ClInclude Include="src\GBackGround.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\USound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GSButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
